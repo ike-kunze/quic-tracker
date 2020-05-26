@@ -193,7 +193,7 @@ func (c *Connection) GetInitialPacket() *InitialPacket {
 func (c *Connection) ProcessVersionNegotation(vn *VersionNegotiationPacket) error {
 	var version uint32
 	for _, v := range vn.SupportedVersions {
-		if v >= MinimumVersion && v <= MaximumVersion {
+		if int(v) >= MinimumVersion && int(v) <= MaximumVersion {
 			version = uint32(v)
 		}
 	}

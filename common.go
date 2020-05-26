@@ -48,12 +48,13 @@ var QuicVersion uint32 = 0xff00001b // See https://tools.ietf.org/html/draft-iet
 var QuicALPNToken = "hq-27"         // See https://www.ietf.org/mail-archive/web/quic/current/msg01882.html
 var QuicH3ALPNToken = "h3-27"       // See https://tools.ietf.org/html/draft-ietf-quic-http-17#section-2.1
 
+var MaximumVersion         = 0xff00001b
+var MinimumVersion         = 0xff00001b
+
 const (
 	MinimumInitialLength   = 1252
 	MinimumInitialLengthv6 = 1232
 	MaxUDPPayloadSize      = 65507
-	MaximumVersion         = 0xff00001b
-	MinimumVersion         = 0xff00001b
 )
 
 // errors
