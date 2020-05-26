@@ -197,9 +197,9 @@ func (c *Connection) ProcessVersionNegotation(vn *VersionNegotiationPacket) erro
 			version = uint32(v)
 		}
 	}
+	c.Logger.Printf("Versions received: %v\n", vn.SupportedVersions)
 	if version == 0 {
 		c.Logger.Println("No appropriate version was found in the VN packet")
-		c.Logger.Printf("Versions received: %v\n", vn.SupportedVersions)
 		return errors.New("no appropriate version found")
 	}
 	QuicVersion = version
