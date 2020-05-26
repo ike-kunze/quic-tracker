@@ -31,6 +31,7 @@ func main() {
 	randomise := flag.Bool("randomise", false, "Randomise the execution order of scenarii")
 	timeout := flag.Int("timeout", 10, "The amount of time in seconds spent when completing a test. Defaults to 10. When set to 0, each test ends as soon as possible.")
 	debug := flag.Bool("debug", false, "Enables debugging information to be printed.")
+	quicVersionString := flag.String("quicVersion", "ff00001b", "Which QUIC version to announce.")
 	flag.Parse()
 
 	_, filename, _, ok := runtime.Caller(0)
@@ -140,7 +141,7 @@ func main() {
 				crashTrace := GetCrashTrace(scenario, host) // Prepare one just in case
 				start := time.Now()
 
-				args := []string{"run", scenarioRunnerFilename, "-host", host, "-path", path, "-alpn", preferredALPN, "-scenario", scenarioId, "-interface", *netInterface, "-output", outputFile.Name(), "-timeout", strconv.Itoa(*timeout)}
+				args := []string{"run", scenarioRunnerFilename, "-host", host, "-path", path, "-alpn", preferredALPN, "-scenario", scenarioId, "-interface", *netInterface, "-output", outputFile.Name(), "-timeout", strconv.Itoa(*timeout), "-quicVersion", *quicVersionString}
 				if *debug {
 					args = append(args, "-debug")
 				}

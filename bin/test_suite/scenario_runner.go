@@ -9,6 +9,8 @@ import (
 	"os/exec"
 	"strings"
 	"time"
+	"encoding/hex"
+	"encoding/binary"
 )
 
 func main() {
@@ -22,12 +24,21 @@ func main() {
 	nopcap := flag.Bool("nopcap", false, "Disables the pcap capture.")
 	netInterface := flag.String("interface", "", "The interface to listen to when capturing pcap.")
 	timeout := flag.Int("timeout", 10, "The amount of time in seconds spent when completing the test. Defaults to 10. When set to 0, the test ends as soon as possible.")
+	quicVersionString := flag.String("quicVersion", "ff00001b", "Which QUIC version to announce.")
 	flag.Parse()
 
 	if *host == "" || *path == "" || *scenarioName == "" {
 		println("Parameters host, path and scenario are required")
 		os.Exit(-1)
 	}
+
+	inter, err := hex.DecodeString(*quicVersionString)
+	if err != nil{
+		println("QuicVersion could not be read successfully")
+		os.Exit(-1)
+	}
+	
+	qt.QuicVersion = binary.BigEndian.Uint32(inter)
 
 	scenario, ok := s.GetAllScenarii()[*scenarioName]
 	if !ok {
