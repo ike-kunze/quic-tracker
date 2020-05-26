@@ -26,6 +26,16 @@ openssl headers installed before starting.
     cd $GOPATH/src/github.com/mpiraux/ls-qpack-go
     make
 
+Then to this
+
+::
+
+    cd $GOPATH/src/github.com/QUIC-Tracker
+    rm -rf quic-tracker
+    git clone https://github.com/ike-kunze/quic-tracker.git
+
+
+
 The test suite is run using the scripts in ``bin/test_suite/``. For help
 about their usage see:
 
