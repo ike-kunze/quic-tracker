@@ -92,6 +92,13 @@ func main() {
 				}
 			}
 		}
+
+
+		trace.QuicVersion = qt.QuicVersion
+		trace.QuicServerVersions = conn.ServerSupportedVersions
+
+
+
 	} else {
 		trace.ErrorCode = 255
 		trace.Results["udp_error"] = err.Error()

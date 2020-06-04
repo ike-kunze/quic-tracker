@@ -80,6 +80,9 @@ type Connection struct {
 	QLog 				 qlog.QLog
 	QLogTrace			 *qlog.Trace
 	QLogEvents			 chan *qlog.Event
+
+	// Custom stuff for logging
+	ServerSupportedVersions 		[]uint32
 }
 func (c *Connection) ConnectedIp() net.Addr {
 	return c.UdpConnection.RemoteAddr()
@@ -193,6 +196,7 @@ func (c *Connection) GetInitialPacket() *InitialPacket {
 func (c *Connection) ProcessVersionNegotation(vn *VersionNegotiationPacket) error {
 	var version uint32
 	for _, v := range vn.SupportedVersions {
+		c.ServerSupportedVersions = append(c.ServerSupportedVersions,uint32(v))
 		if int(v) >= MinimumVersion && int(v) <= MaximumVersion {
 			version = uint32(v)
 		}

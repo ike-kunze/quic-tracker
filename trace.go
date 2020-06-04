@@ -13,6 +13,8 @@ type Trace struct {
 	Commit              string                 `json:"commit"`     // The git commit that versions the code that produced the trace
 	Scenario            string                 `json:"scenario"`   // The id of the scenario that produced the trace
 	ScenarioVersion     int                    `json:"scenario_version"`
+	QuicVersion 		uint32				   `json:"quic_version"`		  // QUIC version used by quic-tracker
+	QuicServerVersions 	[]uint32			   `json:"quic_server_versions"`   // QUIC versions of the target server
 	Host                string                 `json:"host"`       // The host against which the scenario was run
 	Ip                  string                 `json:"ip"`         // The IP that was resolved for the given host
 	Results             map[string]interface{} `json:"results"`    // A dictionary that allows to report scenario-specific results
