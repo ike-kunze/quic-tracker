@@ -108,6 +108,12 @@ func main() {
 			}
 			preferredALPN := line[3]
 
+			var explicitSNI = ""
+			if len(line) > 4 {
+				explicitSNI = line[4]
+				println("Use SNI: ", explicitSNI)
+			}
+
 			if scenario.HTTP3() {
 				split := strings.Split(host, ":")
 				host, _ = split[0], split[1]
@@ -141,7 +147,8 @@ func main() {
 				crashTrace := GetCrashTrace(scenario, host) // Prepare one just in case
 				start := time.Now()
 
-				args := []string{"run", scenarioRunnerFilename, "-host", host, "-path", path, "-alpn", preferredALPN, "-scenario", scenarioId, "-interface", *netInterface, "-output", outputFile.Name(), "-timeout", strconv.Itoa(*timeout), "-quicVersion", *quicVersionString}
+				args := []string{"run", scenarioRunnerFilename, "-host", host, "-path", path, "-alpn", preferredALPN, "-scenario", scenarioId, "-interface", *netInterface, "-output", outputFile.Name(), "-timeout", strconv.Itoa(*timeout), "-quicVersion", *quicVersionString,
+				"-explicitSNI", explicitSNI}
 				if *debug {
 					args = append(args, "-debug")
 				}

@@ -295,7 +295,7 @@ func EstablishUDPConnection(addr *net.UDPAddr) (*net.UDPConn, error) {
 	}
 	return udpConn, nil
 }
-func NewDefaultConnection(address string, serverName string, resumptionTicket []byte, useIPv6 bool, preferredALPN string, negotiateHTTP3 bool) (*Connection, error) {
+func NewDefaultConnection(address string, serverName string, resumptionTicket []byte, useIPv6 bool, preferredALPN string, negotiateHTTP3 bool, explicitSNI string) (*Connection, error) {
 	scid := make([]byte, 8, 8)
 	dcid := make([]byte, 8, 8)
 	rand.Read(scid)
@@ -312,6 +312,14 @@ func NewDefaultConnection(address string, serverName string, resumptionTicket []
 	if err != nil {
 		return nil, err
 	}
+
+	// Address is not an SNI but only an IP -> Set custom SNI
+	if explicitSNI != "" {
+		serverName = explicitSNI
+	}
+	
+	println(fmt.Sprintf("Establish connection to %s:%s using the following SNI: %s", net.IP.String(udpAddr.IP), string(udpAddr.Port), serverName))
+	
 	udpConn, err := EstablishUDPConnection(udpAddr)
 	if err != nil {
 		return nil, err

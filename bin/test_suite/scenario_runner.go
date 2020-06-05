@@ -25,6 +25,7 @@ func main() {
 	netInterface := flag.String("interface", "", "The interface to listen to when capturing pcap.")
 	timeout := flag.Int("timeout", 10, "The amount of time in seconds spent when completing the test. Defaults to 10. When set to 0, the test ends as soon as possible.")
 	quicVersionString := flag.String("quicVersion", "ff00001b", "Which QUIC version to announce.")
+	explicitSNI := flag.String("explicitSNI", "", "If set, use this SNI for connection establishment.")
 	flag.Parse()
 
 	if *host == "" || *path == "" || *scenarioName == "" {
@@ -47,8 +48,7 @@ func main() {
 	}
 
 	trace := qt.NewTrace(scenario.Name(), scenario.Version(), *host)
-
-	conn, err := qt.NewDefaultConnection(*host, strings.Split(*host, ":")[0], nil, scenario.IPv6(), *alpn, scenario.HTTP3()) // Raw IPv6 are not handled correctly
+	conn, err := qt.NewDefaultConnection(*host, strings.Split(*host, ":")[0], nil, scenario.IPv6(), *alpn, scenario.HTTP3(), *explicitSNI) // Raw IPv6 are not handled correctly
 
 	if err == nil {
 		conn.QLog.Title = "QUIC-Tracker scenario " + *scenarioName
