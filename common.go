@@ -54,7 +54,7 @@ var MinimumVersion         = 0xff00001c
 const (
 	MinimumInitialLength   = 1252
 	MinimumInitialLengthv6 = 1232
-	MaxUDPPayloadSize      = 65507
+	MaxTheoreticUDPPayloadSize      = 65507
 )
 
 // errors
