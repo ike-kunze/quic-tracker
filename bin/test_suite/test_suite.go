@@ -99,7 +99,7 @@ func main() {
 
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
-			line := strings.Split(scanner.Text(), "\t")
+			line := strings.Split(scanner.Text(), ",")
 			host, path := line[0], line[1]
 			h3port, err := strconv.Atoi(line[2])
 			if err != nil {
